@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Pong Game</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: '□';
+            position: fixed;
+            font-size: 600px;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.05);
+        }
+
+        .bitcoin-symbols {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .bitcoin-symbol {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            animation: float 15s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            content: '□';
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        canvas {
+            border: 2px solid #ffffff;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+        }
+
+        .game-container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score {
+            color: #ffffff;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        #ballImage {
+            display: none;
+        }
+
+        .reset-button {
+            margin-top: 32px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #000000;
+            background-color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            letter-spacing: 1px;
+            display: block;
+            width: fit-content;
+        }
+
+        .reset-button:hover {
+            background-color: #f2f2f2;
+            transform: translateY(-1px);
+        }
+
+        .reset-button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bitcoin-symbols">
+        <script>
+            // Create floating square symbols
+            for (let i = 0; i < 30; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'bitcoin-symbol';
+                symbol.textContent = '□';
+                symbol.style.left = Math.random() * 100 + 'vw';
+                symbol.style.animationDelay = Math.random() * 15 + 's';
+                symbol.style.opacity = 0.05 + Math.random() * 0.1;
+                document.querySelector('.bitcoin-symbols').appendChild(symbol);
+            }
+        </script>
+    </div>
+    <div class="game-container">
+        <div class="score">
+            <span id="playerScore">0</span> - <span id="computerScore">0</span>
+        </div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <img id="ballImage" src="CleanShot 2025-04-29 at 10.36.30@2x.png" alt="ball">
+        <button class="reset-button" onclick="resetScore()">Reset Score</button>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html> 
